@@ -1,2 +1,2 @@
-# Paradise Nursery
-Una tienda en línea especializada en plantas de interior, construida con React y Redux Toolkit.
+# e-plantShopping
+Paradise Nursery - Tu tienda de confianza para plantas de interior.
