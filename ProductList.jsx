@@ -1,31 +1,29 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addItem } from './CartSlice';
+const plantsArray = [
+    {
+        category: "Air Purifying",
+        plants: [
+            { name: "Snake Plant", image: "https://...", cost: "$15" },
+            { name: "Spider Plant", image: "https://...", cost: "$12" },
+            { name: "Peace Lily", image: "https://...", cost: "$18" },
+            { name: "Boston Fern", image: "https://...", cost: "$20" },
+            { name: "Rubber Plant", image: "https://...", cost: "$22" },
+            { name: "Aloe Vera", image: "https://...", cost: "$10" }
+        ]
+    },
+    // REPITE esto para otras 2 categorías (Aromatic, Insect Repellent)
+];
 
-function ProductList() {
-    const dispatch = useDispatch();
-    const [addedToCart, setAddedToCart] = useState({});
-
-    const plantsArray = [
-        {
-            category: "Plantas de Aire Purificado",
-            plants: [
-                { name: "Snake Plant", image: "url", cost: "$15" },
-                { name: "Spider Plant", image: "url", cost: "$12" },
-                // ... agrega 4 más para cumplir "al menos 6"
-            ]
-        },
-        // ... agrega 2 categorías más
-    ];
-
-    const handleAddToCart = (product) => {
-        dispatch(addItem(product));
-        setAddedToCart((prevState) => ({ ...prevState, [product.name]: true }));
-    };
-
-    return (
-        <div>
-            {/* Implementa aquí el map de plantas y el botón con disabled={addedToCart[plant.name]} */}
-        </div>
-    );
-}  
+// Lógica del botón dentro del return:
+{category.plants.map((plant) => (
+  <div key={plant.name}>
+    <img src={plant.image} alt={plant.name} />
+    <h3>{plant.name}</h3>
+    <p>{plant.cost}</p>
+    <button 
+      disabled={addedToCart[plant.name]} 
+      onClick={() => handleAddToCart(plant)}
+    >
+      {addedToCart[plant.name] ? "Added" : "Add to Cart"}
+    </button>
+  </div>
+))}
