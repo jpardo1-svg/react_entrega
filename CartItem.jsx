@@ -1,20 +1,33 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeItem, updateQuantity } from './CartSlice';
 
-const CartItem = ({ item, updateQuantity, removeItem }) => {
+const CartItem = ({ onContinueShopping }) => {
+  const cart = useSelector(state => state.cart.items);
+  const dispatch = useDispatch();
+
+  const calculateTotalAmount = () => {
+    return cart.reduce((total, item) => total + (parseFloat(item.cost.substring(1)) * item.quantity), 0);
+  };
+
+  const handleIncrement = (item) => {
+    dispatch(updateQuantity({ name: item.name, quantity: item.quantity + 1 }));
+  };
+
+  const handleDecrement = (item) => {
+    if (item.quantity > 1) {
+        dispatch(updateQuantity({ name: item.name, quantity: item.quantity - 1 }));
+    } else {
+        dispatch(removeItem(item.name));
+    }
+  };
+
   return (
-    <div className="cart-item">
-      <img src={item.image} alt={item.name} />
-      <div className="item-details">
-        <h4>{item.name}</h4>
-        <p className="item-price">${item.price} c/u</p>
-      </div>
-      <div className="quantity-controls">
-        <button onClick={() => updateQuantity(item.id, -1)} disabled={item.quantity <= 1}>-</button>
-        <span className="qty-number">{item.quantity}</span>
-        <button onClick={() => updateQuantity(item.id, 1)}>+</button>
-      </div>
-      <p className="subtotal-item">${item.price * item.quantity}</p>
-      <button className="delete-btn" onClick={() => removeItem(item.id)}>🗑️</button>
+    <div>
+      <h2>Total Carrito: ${calculateTotalAmount()}</h2>
+      {/* Mapeo de items con botones de incrementar, decrementar y eliminar */}
+      <button onClick={() => alert('Próximamente')}>Checkout</button>
+      <button onClick={onContinueShopping}>Continuar Comprando</button>
     </div>
   );
 };
